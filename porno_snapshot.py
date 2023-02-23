@@ -140,14 +140,16 @@ if len(nfts) > 0:
             # The NFT is not assigned to a DID
             didless_writer.writerow([nft.name, nft.id, xch_address])
             continue
-
+        
+        rejected = False
         for excluded_DID in excluded_DIDs:
             if nft.owner.did == excluded_DID['id']:
                 excluded_NFTs_writer.writerow([nft.name, nft.id, nft.owner.name, nft.owner.did, nft.owner.address])
                 excluded_DID['total_excluded'] += 1
-                continue
+                rejected = True
 
-        did_assigned_nfts.append(nft)
+        if not rejected:
+            did_assigned_nfts.append(nft)
             
 
     # Sort the list of NFTs by owner name
@@ -175,6 +177,7 @@ if len(nfts) > 0:
     for i in range(len(owner_names)):
         nft_ownership_agg_writer.writerow([owner_names[i], counts[i], owner_dids[i], owner_addresses[i]])
 
+    print("\nTotal of ", len(sorted_nfts), " verifiably owned NFTs found")
 
     # Close files
     nft_ownership_file.close()
