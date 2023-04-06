@@ -1,5 +1,7 @@
 # DID PIX
 
+Version 1.1.0
+
 <div align="center">
     <img src="https://bafybeiam6rq5c5jmg5lp524q6elln33stojpsclipzr5whicyegmzmfdym.ipfs.nftstorage.link/DIDPIX.png" style="width:40%;height:auto;"/>
     <p><a href="https://mintgarden.io/nfts/nft1frue7ehxrj975q3dy9f8n0lq0a7lt7676jlg5rl59yr2dzc2y46qdksvxk">Johnson Peeperton</a> the DID PIX Mascot!</p>
