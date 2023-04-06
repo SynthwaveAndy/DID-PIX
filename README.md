@@ -20,7 +20,7 @@ This simple program can be used to generate a list of XCH Receive addresses for 
 
 ## Example
 
-Included for example, is the output for the [$DEGEN](https://www.taildatabase.com/tail/320b869bc8d293cca8784187312da1a61cf43b9cf0724b47d8e027dcca1dd501) Airdrop snapshot which was performed in early 2023.
+Included for example, is the output for the `Proof of Synth and Time` NFT collection, as of the day of this commit.
 
 ## Running
 
