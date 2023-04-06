@@ -1,5 +1,6 @@
 from utils import ProgressBar, System, Log, Color
 from query_user import QueryUser
+from os import mkdir, path
 
 from dataclasses import dataclass
 from typing import List
@@ -269,6 +270,9 @@ def main():
     print(f"\n{Color.white_highlight(' Page 3/3 : DID Snapshot ')}\n")
     
     nfts = fetch_NFT_IDs(collections)
+    
+    if not path.isdir("./Output"):
+        mkdir(dir)
     
     if len(nfts) > 0:
         generate_results(nfts, excluded_DIDs)
