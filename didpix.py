@@ -73,8 +73,7 @@ def fetch_NFT_IDs(collections : List[str]) -> List[NFT]:
         print()
         Log.INFO(f"{collection_index}/{len(collections)} Fetching NFT IDs for: {col['name']}")
 
-        resp = requests.get(url=f'https://api.mintgarden.io/collections/{col["ID"]}/nfts/ids')
-        data = resp.json()
+        data = mint_garden_get_request(f'https://api.mintgarden.io/collections/{col["ID"]}/nfts/ids')
 
         for d in data:
             nfts.append(NFT(d['name'], d['encoded_id'], None))
@@ -126,7 +125,7 @@ def generate_results(nfts : List[NFT], excluded_DIDs : List[dict]):
 
     ## Get Owner addresses for each NFT
     did_assigned_nfts = []
-    for nft in ProgressBar.create(nfts, prefix = 'Fetching Wallet Addresses:', suffix = Color.green_text('Done!'), length = 25):
+    for nft in ProgressBar.create(nfts, prefix = 'Fetching Wallet Addresses:', length = 25):
         try:
             data = mint_garden_get_request(url_request=f'https://api.mintgarden.io/nfts/{nft.id}', allow_timeout=True)
         except:
@@ -162,7 +161,7 @@ def generate_results(nfts : List[NFT], excluded_DIDs : List[dict]):
     sorted_nfts = sorted(did_assigned_nfts, key=get_owner_did)
 
     # Write the sorted list of NFTs
-    for nft in ProgressBar.create(sorted_nfts, prefix = 'Writing sorted list of Owned NFTs:', suffix = Color.green_text('Done!'), length = 17):
+    for nft in ProgressBar.create(sorted_nfts, prefix = 'Writing sorted list of Owned NFTs:', length = 17):
         nft_ownership_writer.writerow([nft.name, nft.id, nft.owner.name, nft.owner.did, nft.owner.address])
     
     owner_names = []
@@ -171,7 +170,7 @@ def generate_results(nfts : List[NFT], excluded_DIDs : List[dict]):
     owner_addresses = []
     
     # Aggregate the List
-    for nft in ProgressBar.create(sorted_nfts, prefix = 'Writing aggregated list of Owners:', suffix = Color.green_text('Done!'), length = 17):
+    for nft in ProgressBar.create(sorted_nfts, prefix = 'Writing aggregated list of Owners:', length = 17):
         if nft.owner.did in owner_DIDs:
             counts[owner_DIDs.index(nft.owner.did)] += 1
         else:
