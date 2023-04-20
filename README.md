@@ -24,7 +24,11 @@ Included for example, is the output for the `Proof of Synth and Time` NFT collec
 
 ## Running
 
+### Wizard
 `$ python didpix.py`
+
+### Commandline
+`$ python didpix.py -c col1wt3rv8fqmw5ydmlg6fqdpxfrag9rn8taz7uk38daawu7gfzlecrsp049hu`
 
 ## Output
 
