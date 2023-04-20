@@ -17,6 +17,7 @@ from utils import System, Formatter, Color
 from query_user import QueryUser
 import pandas as pd
 import numpy as np
+import argparse
 
 
 def display_title():
@@ -27,6 +28,10 @@ def display_title():
         "\t| |  || || |  | 📷 |  _/| |/\\ \\  \n" +
         "\t|___/ |_||___/     |_|  |_|_/\\_\\ \n")
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="A tool for NFTs on Chia")
+    parser.add_argument("-c", "--collection_id", type=str, required=False, help="Collection ID")
+    return parser.parse_args()
 
 def fetch_collection_name(collection_id: str) -> str:
     try:
@@ -128,7 +133,7 @@ def say_goodbye():
     print(f"\n\t  {Color.green_text('Thank you for using DID PIX!')}\n")
     print("Please,\n - Provide Feedback, Feature Requests or report Issues on GitHub")
     print(" - Consider supporting my collections which fuel development of tools like this!")
-    input(f"\n {Color.prompt()} Press Enter to exit application..")
+    
 
 
 def get_collection_info(collection_id_list):
@@ -175,7 +180,6 @@ def get_did_exculsions(excluded_dids):
 
 
 def did_snapshot(collection_id_list):
-    print(f"\n{Color.white_highlight(' Page 3/3 : DID Snapshot ')}\n")
     Formatter.info("Creating and Opening the output files")
     for collection in collection_id_list:
         create_csv_files(collection, False)
@@ -183,10 +187,10 @@ def did_snapshot(collection_id_list):
         Formatter.success("The DID Snapshot is complete!")
         print("\n")
 
-    input(f"\n {Color.prompt()} Press Enter to continue..")
+    
 
-
-def main():
+# TODO Rename this here and in `main`
+def did_wizard():
     # Call necessary functions to clear screen and display title
     System.clear()
     display_title()
@@ -202,7 +206,9 @@ def main():
     display_title()
 
     # Perform DID snapshot for the collection ID list
+    print(f"\n{Color.white_highlight(' Page 3/3 : DID Snapshot ')}\n")
     did_snapshot(collection_id_list)
+    input(f"\n {Color.prompt()} Press Enter to continue..")
 
     # Call necessary functions to clear screen and display title
     System.clear()
@@ -210,6 +216,20 @@ def main():
 
     # Say goodbye
     say_goodbye()
+    input(f"\n {Color.prompt()} Press Enter to exit application..")
+
+def main():
+    # Parse command-line arguments#
+    args = parse_args()
+
+    if args.collection_id:
+        # If collection_id is provided, directly call get_collection_info() with the provided value
+        display_title()
+        collection_id = args.collection_id
+        did_snapshot([collection_id])
+        say_goodbye()
+    else:
+        did_wizard()
 
 
 if __name__ == "__main__":
